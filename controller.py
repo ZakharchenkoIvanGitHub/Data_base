@@ -12,19 +12,21 @@ def start():
     while True:
         view.menu()
         match request.get_command():
-            case 0:
+            case "0":
                 break
-            case 1:
+            case "1":
                 # model.get_data()
                 pass
-            case 2:
-                model.add_record(cursor, request.get_data())
+            case "2":
+                surname, name, date_birth = request.get_data()
+
+                model.add_record(conn, cursor, surname, name, date_birth)
 
                 pass
-            case 3:
+            case "3":
                 # Редактировать запись по id
                 pass
-            case 4:
+            case "4":
                 # Удалить запись
                 pass
     model.disconnect(conn)

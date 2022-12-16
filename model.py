@@ -4,6 +4,7 @@ import sqlite3
 def connect():
     conn = sqlite3.connect("db_wh_8.db")
     cursor = conn.cursor()
+
     return conn, cursor
 
 
@@ -11,13 +12,14 @@ def disconnect(conn):
     conn.close()
 
 
-def add_record(cursor, surname, name, date_birth):
+def add_record(conn, cursor, surname, name, date_birth):
     cursor.execute(
         "INSERT INTO 'students' ('surname', 'name', 'date_birth' ) VALUES (?,?,?)",
         (surname,
          name,
-         date_birth,
+         date_birth
          ))
+    conn.commit()
 
 
 def get_data(cursor):
