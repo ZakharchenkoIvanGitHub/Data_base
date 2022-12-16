@@ -26,3 +26,6 @@ def menu() -> str:
             '4 - Удаление записи \n')
 
     return input("Введите пункт меню: ")
+
+def print_data():
+    pass

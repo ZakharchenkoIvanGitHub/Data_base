@@ -1,18 +1,25 @@
 import view
 from logger import log
+import model
+import request
+
+
 @log
 def start():
     """Стартовая функция"""
-    view.greatings()
+    view.greetings()
+    conn, cursor = model.connect()
     while True:
-        match view.menu():
+        view.menu()
+        match request.get_command():
             case 0:
                 break
             case 1:
-                # Загрузить из файла
+                # model.get_data()
                 pass
             case 2:
-                # Добавить новую запись
+                model.add_record(cursor, request.get_data())
+
                 pass
             case 3:
                 # Редактировать запись по id
@@ -20,3 +27,4 @@ def start():
             case 4:
                 # Удалить запись
                 pass
+    model.disconnect(conn)
