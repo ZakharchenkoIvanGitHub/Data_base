@@ -26,5 +26,5 @@ def start():
 
                 pass
             case "4":  # Удалить запись
-                model.del_data(request.get_id())
+                model.del_data(conn, cursor, request.get_id())
     model.disconnect(conn)
