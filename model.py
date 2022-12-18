@@ -97,8 +97,20 @@ def get_data(cursor):
 
 
 def edit_data():
+
     pass
 
 
-def del_data(id):
-    pass
+def del_data(conn, cursor, id):
+    cursor.execute(
+        "DELETE FROM telephone_book WHERE id_student = ?",
+        (
+         id,
+         ))
+    conn.commit()
+    cursor.execute(
+        "DELETE FROM students WHERE id = ?",
+        (
+            id,
+        ))
+    conn.commit()
