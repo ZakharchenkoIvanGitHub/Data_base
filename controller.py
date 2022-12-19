@@ -23,8 +23,12 @@ def start():
                 model.add_record(conn, cursor, data)
 
             case "3":  # Редактировать запись по id
+                data = model.get_data_id(cursor, request.get_id())
+                view.print_data(data)
+                new_data = request.get_data()
+                model.edit_data(conn, cursor, data[0][0], new_data)
 
-                pass
             case "4":  # Удалить запись
                 model.del_data(conn, cursor, request.get_id())
+
     model.disconnect(conn)

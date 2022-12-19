@@ -1,13 +1,19 @@
 import var
+from logger import log
 
-def get_command():
+
+@log
+def get_command(): # Запрос команды из меню
     return input('Введите пункт меню: ')
 
-def get_id():
+
+@log
+def get_id(): # Запрос id
     return input('Введите id: ')
 
 
-def get_data():
+@log
+def get_data(): # запрос данных от пользователя
     data = []
     tel_list = []
     for col in var.field:
@@ -26,5 +32,3 @@ def get_data():
     return data
 
 # field = ["id", "Фамилия", "Имя", "Дата_рождения", "Группа", "Практика", "Номера_телефонов"]
-
-
