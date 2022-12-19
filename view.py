@@ -28,3 +28,7 @@ def print_data(data: list):
     Вывод в консоль данных содержимого справочника
     """
     print(tabulate(data, headers=var.field, tablefmt="grid"))
+
+def print_error():
+    """Сообщение об ошибки"""
+    print("Данные по данному id отсутствуют")

@@ -113,12 +113,15 @@ def del_data(conn, cursor, id):
 @log
 def get_data_id(cursor, id):
     """Запрос данных по id"""
-    request = cursor.execute("""SELECT students.id, surname,name,date_birth ,group_name,place_practice 
-                        FROM students 
-                        LEFT JOIN 'groups' ON students.group_id =groups.id 
-                        LEFT JOIN 'practic' ON students.practic_id =practic.id
-                        WHERE  students.id = ?""", (id,)
-                             ).fetchall()[0]
+    try:
+        request = cursor.execute("""SELECT students.id, surname,name,date_birth ,group_name,place_practice 
+                            FROM students 
+                            LEFT JOIN 'groups' ON students.group_id =groups.id 
+                            LEFT JOIN 'practic' ON students.practic_id =practic.id
+                            WHERE  students.id = ?""", (id,)
+                                 ).fetchall()[0]
+    except IndexError:
+        return None
 
     result = list(request)
     id = request[0]
