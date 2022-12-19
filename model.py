@@ -4,6 +4,7 @@ from logger import log
 
 @log
 def connect():
+    """Подключение к БД"""
     conn = sqlite3.connect("db_wh_8.db")
     cursor = conn.cursor()
 
@@ -12,10 +13,12 @@ def connect():
 
 @log
 def disconnect(conn):
+    """Закрытие подключения с БД"""
     conn.close()
 
 
 def add_record(conn, cursor, data):
+    """Запись данных в БД"""
     # Запись группы
     id_group = cursor.execute(
         "SELECT id FROM 'groups' WHERE group_name = ?", (data[3],)).fetchall()
@@ -73,6 +76,7 @@ def add_record(conn, cursor, data):
 
 @log
 def get_data(cursor):
+    """Запрос данных из БД"""
     result = []
     request = cursor.execute("""SELECT students.id, surname,name,date_birth ,group_name,place_practice 
                         FROM students 
@@ -97,23 +101,18 @@ def get_data(cursor):
 
 @log
 def del_data(conn, cursor, id):
+    """Удаление данных в БД"""
     cursor.execute(
-        "DELETE FROM telephone_book WHERE id_student = ?",
-        (
-            id,
-        ))
+        "DELETE FROM telephone_book WHERE id_student = ?", (id,))
     conn.commit()
     cursor.execute(
-        "DELETE FROM students WHERE id = ?",
-        (
-            id,
-        ))
+        "DELETE FROM students WHERE id = ?", (id,))
     conn.commit()
 
 
 @log
 def get_data_id(cursor, id):
-    result = []
+    """Запрос данных по id"""
     request = cursor.execute("""SELECT students.id, surname,name,date_birth ,group_name,place_practice 
                         FROM students 
                         LEFT JOIN 'groups' ON students.group_id =groups.id 
@@ -127,24 +126,21 @@ def get_data_id(cursor, id):
                         FROM telephone_book
                         WHERE id_student = ?""", (id,)).fetchall()
     str_tel = ""
-
     for tel in tels:
         str_tel += tel[0] + "\n"
     result.append(str_tel)
-
     return [result]
 
 
 @log
 def edit_data(conn, cursor, id, data):
+    """Изменение данных в БД"""
     # Запись группы
     id_group = cursor.execute(
         "SELECT id FROM 'groups' WHERE group_name = ?", (data[3],)).fetchall()
     if not len(id_group):
         cursor.execute(
-            "INSERT INTO 'groups' ('group_name' ) VALUES (?)",
-            (data[3],
-             ))
+            "INSERT INTO 'groups' ('group_name' ) VALUES (?)", (data[3],))
         conn.commit()
         id_group = cursor.execute(
             "SELECT id FROM 'groups' WHERE group_name = ?", (data[3],)).fetchall()[0][0]
@@ -157,13 +153,10 @@ def edit_data(conn, cursor, id, data):
     ).fetchall()
     if not len(id_practic):
         cursor.execute(
-            "INSERT INTO 'practic' ('place_practice' ) VALUES (?)",
-            (data[4],
-             ))
+            "INSERT INTO 'practic' ('place_practice' ) VALUES (?)", (data[4],))
         conn.commit()
         id_practic = cursor.execute(
-            "SELECT id FROM 'practic' WHERE place_practice = ?", (data[4],)
-        ).fetchall()[0][0]
+            "SELECT id FROM 'practic' WHERE place_practice = ?", (data[4],)).fetchall()[0][0]
     else:
         id_practic = id_practic[0][0]
 
@@ -180,10 +173,7 @@ def edit_data(conn, cursor, id, data):
     conn.commit()
 
     cursor.execute(
-        "DELETE FROM telephone_book WHERE id_student = ?",
-        (
-            id,
-        ))
+        "DELETE FROM telephone_book WHERE id_student = ?", (id,))
     conn.commit()
 
     for tel in data[5]:

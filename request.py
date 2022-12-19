@@ -3,17 +3,20 @@ from logger import log
 
 
 @log
-def get_command(): # Запрос команды из меню
+def get_command():
+    """Запрос команды из меню"""
     return input('Введите пункт меню: ')
 
 
 @log
-def get_id(): # Запрос id
+def get_id():
+    """Запрос id"""
     return input('Введите id: ')
 
 
 @log
-def get_data(): # запрос данных от пользователя
+def get_data():
+    """Запрос данных от пользователя"""
     data = []
     tel_list = []
     for col in var.field:
@@ -30,5 +33,3 @@ def get_data(): # запрос данных от пользователя
         else:
             data.append(input(f'Введите {col}: '))
     return data
-
-# field = ["id", "Фамилия", "Имя", "Дата_рождения", "Группа", "Практика", "Номера_телефонов"]
